@@ -1,0 +1,104 @@
+/* Solmar Bay — HUD, menus and touch controls. */
+html, body { margin: 0; height: 100%; overflow: hidden; background: #0b1020;
+  font-family: "Trebuchet MS", "Segoe UI", Verdana, sans-serif; color: #fff;
+  -webkit-user-select: none; user-select: none; }
+#game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+#status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.hidden { display: none !important; }
+
+/* ---------- HUD ---------- */
+#hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+#hud-objective { position: absolute; top: 14px; left: 14px; max-width: 46vw;
+  background: rgba(8, 12, 26, .62); border-left: 4px solid #ffd23e;
+  padding: 8px 12px; border-radius: 0 8px 8px 0; }
+#objective-title { font-size: 11px; letter-spacing: 2px; color: #ffd23e; font-weight: bold; }
+#objective-text { font-size: 17px; font-weight: bold; line-height: 1.25; }
+#objective-sub { font-size: 12px; color: #cfe3ff; margin-top: 2px; }
+#hud-stats { position: absolute; top: 14px; right: 14px; text-align: right; }
+#cash { font-size: 26px; font-weight: bold; color: #7dff9b; text-shadow: 0 2px 4px #000; }
+#stars { font-size: 24px; letter-spacing: 3px; color: #ffd23e; text-shadow: 0 0 8px rgba(255, 210, 62, .7); min-height: 30px; }
+#stars .dim { color: rgba(255,255,255,.28); text-shadow: none; }
+#healthbar { width: 150px; height: 10px; background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.4);
+  border-radius: 5px; margin-left: auto; overflow: hidden; }
+#healthfill { height: 100%; width: 100%; background: linear-gradient(90deg, #37e05a, #a5ff7a); }
+#filmed { margin-top: 6px; font-size: 12px; font-weight: bold; color: #ff5b5b;
+  animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+#hud-drive { position: absolute; left: 16px; bottom: 16px; text-align: left; }
+#speed { font-size: 44px; font-weight: bold; text-shadow: 0 2px 6px #000; line-height: .9; }
+#speed-unit { font-size: 12px; letter-spacing: 3px; color: #cfe3ff; }
+#carname { font-size: 13px; color: #ffd23e; margin-top: 2px; }
+#hud-weapon { position: absolute; right: 206px; bottom: 16px; text-align: right; }
+#weapon-name { font-size: 16px; font-weight: bold; text-shadow: 0 2px 4px #000; }
+#ammo { font-size: 13px; color: #cfe3ff; }
+#minimap { position: absolute; right: 14px; bottom: 14px; width: 180px; height: 180px;
+  border: 2px solid rgba(255,255,255,.55); border-radius: 50%; background: #0a0f1e;
+  box-shadow: 0 0 0 4px rgba(0,0,0,.35); }
+#toast { position: absolute; left: 50%; top: 22%; transform: translateX(-50%);
+  font-size: 22px; font-weight: bold; color: #ffd23e; text-shadow: 0 2px 8px #000; text-align: center; }
+#bustmeter { position: absolute; left: 50%; top: 58%; transform: translateX(-50%); width: 260px; text-align: center; }
+#bustmeter span { font-size: 12px; letter-spacing: 3px; color: #ff5b5b; font-weight: bold; }
+#bustfill { height: 10px; background: #ff3b30; border: 1px solid #fff; border-radius: 5px; width: 0%; }
+#cooldown { position: absolute; left: 50%; top: 30%; transform: translateX(-50%);
+  font-size: 15px; letter-spacing: 2px; color: #9fd8ff; font-weight: bold; text-shadow: 0 2px 6px #000; }
+
+/* ---------- Touch controls ---------- */
+#touch { position: fixed; inset: 0; z-index: 6; pointer-events: none; }
+#stick { position: absolute; left: 22px; bottom: 110px; width: 124px; height: 124px;
+  border: 2px solid rgba(255,255,255,.5); border-radius: 50%; background: rgba(255,255,255,.08);
+  pointer-events: auto; }
+#stick-knob { position: absolute; left: 38px; top: 38px; width: 48px; height: 48px;
+  border-radius: 50%; background: rgba(255,255,255,.75); }
+#touch-buttons { position: absolute; right: 18px; bottom: 210px; display: grid;
+  grid-template-columns: 64px 64px; gap: 10px; pointer-events: auto; }
+#touch-buttons button { width: 64px; height: 64px; border-radius: 50%; border: 2px solid rgba(255,255,255,.6);
+  background: rgba(10,16,32,.55); color: #fff; font-size: 12px; font-weight: bold; }
+#touch-buttons #btn-fire { background: rgba(180,30,30,.65); }
+
+/* ---------- Overlays / menus ---------- */
+.overlay { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(160deg, rgba(10,14,34,.88), rgba(60,16,64,.82)); padding: 16px; box-sizing: border-box; }
+.panel { max-width: 620px; width: 100%; text-align: center; padding: 26px 28px; box-sizing: border-box;
+  background: rgba(8, 12, 26, .72); border: 1px solid rgba(255, 210, 62, .45); border-radius: 14px;
+  box-shadow: 0 10px 60px rgba(0,0,0,.6); max-height: 92vh; overflow-y: auto; }
+.panel h1 { margin: 0; font-size: 64px; line-height: .95; letter-spacing: 4px;
+  background: linear-gradient(180deg, #ffe27a, #ff7ab8 55%, #7a5cff);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: 0 0 34px rgba(255, 122, 184, .35); }
+.panel h2 { margin: 0 0 10px; font-size: 30px; letter-spacing: 3px; color: #ffd23e; }
+.tagline { color: #9fd8ff; letter-spacing: 2px; font-size: 13px; margin: 8px 0 14px; }
+.story { font-size: 15px; line-height: 1.55; color: #e8ecf7; }
+.menu-buttons { display: flex; flex-direction: column; gap: 10px; align-items: center; margin: 18px 0 8px; }
+button { cursor: pointer; font-family: inherit; }
+.menu-buttons button, #btn-how-close, #btn-busted, #btn-freeroam {
+  min-width: 240px; padding: 12px 22px; font-size: 16px; font-weight: bold; letter-spacing: 1px;
+  color: #111; background: linear-gradient(180deg, #ffe27a, #ffb52e); border: none; border-radius: 8px; }
+.menu-buttons button:hover, #btn-how-close:hover, #btn-busted:hover, #btn-freeroam:hover { filter: brightness(1.1); }
+#btn-continue { background: linear-gradient(180deg, #9fd8ff, #4d8fd6); color: #06101f; }
+#btn-how { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.5); }
+.hint { font-size: 12px; color: #b9c4de; line-height: 1.6; }
+.fine { font-size: 11px; color: #7f8bad; }
+.panel ul { text-align: left; font-size: 14px; line-height: 1.6; color: #e8ecf7; }
+.panel li { margin-bottom: 8px; }
+.busted-title { color: #ff5b5b !important; }
+
+/* ---------- Phone call + banner ---------- */
+#call { position: fixed; left: 50%; top: 12%; transform: translateX(-50%); z-index: 8; width: min(520px, 92vw);
+  background: rgba(8, 12, 26, .92); border: 1px solid #7dff9b; border-radius: 12px; padding: 14px 18px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.6); }
+#call-name { color: #7dff9b; font-weight: bold; letter-spacing: 1px; font-size: 13px; }
+#call-text { font-size: 16px; line-height: 1.5; margin-top: 4px; }
+#call-hint { font-size: 11px; color: #9fb0d0; margin-top: 8px; }
+#banner { position: fixed; left: 50%; top: 38%; transform: translate(-50%, -50%); z-index: 8;
+  font-size: 42px; font-weight: bold; letter-spacing: 4px; color: #ffd23e;
+  text-shadow: 0 0 24px rgba(255, 210, 62, .8), 0 3px 8px #000; text-align: center; }
+
+@media (max-width: 700px) {
+  .panel h1 { font-size: 44px; }
+  #minimap { width: 120px; height: 120px; }
+  #hud-weapon { right: 146px; }
+  #objective-text { font-size: 14px; }
+  #cash { font-size: 20px; }
+  #speed { font-size: 32px; }
+  #banner { font-size: 28px; }
+}

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Solmar Bay — Open World Crime</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<canvas id="game" aria-label="Solmar Bay: an open-world crime game. Explore the city on foot or by car, take jobs, outrun the police."></canvas>
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="hud" class="hidden">
+  <div id="hud-objective">
+    <div id="objective-title">SOLMAR BAY</div>
+    <div id="objective-text"></div>
+    <div id="objective-sub"></div>
+  </div>
+  <div id="hud-stats">
+    <div id="cash">$0</div>
+    <div id="stars" aria-label="Wanted level"></div>
+    <div id="healthbar"><div id="healthfill"></div></div>
+    <div id="filmed" class="hidden">● FILMED — CCTV</div>
+  </div>
+  <div id="hud-drive" class="hidden">
+    <div id="speed">0</div>
+    <div id="speed-unit">mph</div>
+    <div id="carname"></div>
+  </div>
+  <div id="hud-weapon">
+    <div id="weapon-name">Fists</div>
+    <div id="ammo"></div>
+  </div>
+  <canvas id="minimap" width="180" height="180" aria-label="Minimap"></canvas>
+  <div id="toast"></div>
+  <div id="bustmeter" class="hidden"><div id="bustfill"></div><span>BUSTED?</span></div>
+  <div id="cooldown" class="hidden">LOSING THE HEAT…</div>
+</div>
+
+<div id="touch" class="hidden">
+  <div id="stick"><div id="stick-knob"></div></div>
+  <div id="touch-buttons">
+    <button id="btn-enter" type="button">CAR</button>
+    <button id="btn-fire" type="button">FIRE</button>
+    <button id="btn-swap" type="button">SWAP</button>
+    <button id="btn-run" type="button">RUN</button>
+  </div>
+</div>
+
+<div id="menu" class="overlay">
+  <div class="panel">
+    <h1>SOLMAR<br>BAY</h1>
+    <p class="tagline">Costa Alta &middot; sun, salt &amp; bad decisions</p>
+    <p class="story">Cole Maddox just walked out of Costa Alta Correctional after three years.
+    His partner Lena Cruz is waiting at the gate with a borrowed car and a plan.
+    Rent is due, Felix needs a favour, and one easy score could set them free —
+    or put them both back inside.</p>
+    <div class="menu-buttons">
+      <button id="btn-new" type="button">NEW GAME</button>
+      <button id="btn-continue" type="button">CONTINUE</button>
+      <button id="btn-how" type="button">HOW TO PLAY</button>
+    </div>
+    <p class="hint">WASD / arrows — move &amp; drive &middot; E — enter / steal car &middot; Mouse — aim, click — shoot<br>
+    Q — swap Cole / Lena &middot; R — radio &middot; P / Esc — pause &middot; Touch: left stick + buttons</p>
+    <p class="fine">An original game. No real places, people or brands. All art and sound made in code.</p>
+  </div>
+</div>
+
+<div id="howto" class="overlay hidden">
+  <div class="panel">
+    <h2>HOW TO PLAY</h2>
+    <ul>
+      <li><b>Move:</b> WASD / arrows. On foot, walk up to any parked car and press <b>E</b> to take it.</li>
+      <li><b>Drive:</b> W accelerate, S brake / reverse, A / D steer. Cars are faster — and louder.</li>
+      <li><b>Fight:</b> buy a pistol at Steel &amp; Smoke Pawn. Aim with the mouse, click to shoot.</li>
+      <li><b>Wanted:</b> stealing, hitting people and shooting raise your stars. 1 star: one patrol car.
+      3 stars: roadblocks and a police helicopter. 5 stars: the whole city is after you.</li>
+      <li><b>Lose the heat:</b> break line of sight, hide in alleys, wait out the cooldown.</li>
+      <li><b>Busted:</b> if a cop pins you down, you lose some cash and wake up at the safehouse.</li>
+      <li><b>Missions:</b> follow the yellow marker. Talk to Felix, do the jobs, bank the cash.</li>
+      <li><b>Swap:</b> press <b>Q</b> to switch between Cole and Lena. Cash and heat are shared.</li>
+    </ul>
+    <button id="btn-how-close" type="button">BACK</button>
+  </div>
+</div>
+
+<div id="pause" class="overlay hidden">
+  <div class="panel">
+    <h2>PAUSED</h2>
+    <p id="pause-stats"></p>
+    <div class="menu-buttons">
+      <button id="btn-resume" type="button">RESUME</button>
+      <button id="btn-restart" type="button">RESTART STORY</button>
+      <button id="btn-quit" type="button">SAVE &amp; QUIT TO MENU</button>
+    </div>
+    <p class="hint">Progress auto-saves. M — mute.</p>
+  </div>
+</div>
+
+<div id="call" class="hidden">
+  <div id="call-name"></div>
+  <div id="call-text"></div>
+  <div id="call-hint">press ENTER or tap to continue</div>
+</div>
+
+<div id="banner" class="hidden"></div>
+
+<div id="busted" class="overlay hidden">
+  <div class="panel">
+    <h2 class="busted-title">BUSTED</h2>
+    <p id="busted-text"></p>
+    <button id="btn-busted" type="button">WAKE UP AT THE SAFEHOUSE</button>
+  </div>
+</div>
+
+<div id="storydone" class="overlay hidden">
+  <div class="panel">
+    <h2>THE LONG WAY HOME</h2>
+    <p>Cole and Lena made it. The cash is banked, the heat is off, and Solmar Bay is theirs
+    to roam — jobs, cars and trouble, whenever they want it.</p>
+    <p id="story-stats"></p>
+    <button id="btn-freeroam" type="button">FREE ROAM</button>
+  </div>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
